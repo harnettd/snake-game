@@ -34,11 +34,19 @@ while is_game_running:
         the_snake.extend()
 
     # Detect collision with a wall
-    if the_snake.head.xcor() > 280 or the_snake.head.xcor() < -280\
-            or the_snake.head.ycor() > 280 or the_snake.head.ycor() < -280:
+    if the_snake.head.xcor() > 290 or the_snake.head.xcor() < -290\
+            or the_snake.head.ycor() > 290 or the_snake.head.ycor() < -290:
         is_game_running = False
         the_scoreboard.game_over()
+        print("out of bounds")
 
     # Detect collision with a tail segment
+    for tail_segment in the_snake.segments[1:]:
+        separation_x = abs(the_snake.head.xcor() - tail_segment.xcor())
+        separation_y = abs(the_snake.head.ycor() - tail_segment.ycor())
+        if separation_x < 10 and separation_y < 10:
+            is_game_running = False
+            the_scoreboard.game_over()
+            print("self-intersection")
 
 screen.exitonclick()
